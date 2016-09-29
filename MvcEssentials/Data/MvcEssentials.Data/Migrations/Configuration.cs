@@ -109,7 +109,7 @@
                     {
                         var article = new NewsArticle()
                         {
-                            Title = $"{i} {title}",
+                            Title = string.Format("{0} {1}", i, title),
                             Content = content,
                             SampleContent = sampleContent
                         };
