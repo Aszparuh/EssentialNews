@@ -9,6 +9,7 @@
     using Microsoft.AspNet.Identity.EntityFramework;
 
     using MvcEssentials.Data.Models;
+    using System.Configuration;
 
     public sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -51,13 +52,16 @@
                 var user = userManager.FindByName("admin");
                 if (user == null)
                 {
+                    string adminUserName = ConfigurationManager.AppSettings["AdminUserName"];
+                    string adminEmail = ConfigurationManager.AppSettings["AdminEmail"];
+                    string adminPassword = ConfigurationManager.AppSettings["Password"];
                     var newUser = new ApplicationUser()
                     {
-                        UserName = "admin@admin.bg",
-                        Email = "admin@admin.bg",
+                        UserName = adminUserName,
+                        Email = adminEmail,
                         PhoneNumber = "5551234567",
                     };
-                    userManager.Create(newUser, "Password1");
+                    userManager.Create(newUser, adminPassword);
                     userManager.SetLockoutEnabled(newUser.Id, false);
                     userManager.AddToRole(newUser.Id, "Admin");
                 }
