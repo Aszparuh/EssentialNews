@@ -1,15 +1,14 @@
 ﻿namespace MvcEssentials.Data.Migrations
 {
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
     using System.Linq;
     using System.Text;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
-
     using MvcEssentials.Data.Models;
-    using System.Configuration;
 
     public sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
