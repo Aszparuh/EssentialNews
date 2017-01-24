@@ -27,7 +27,7 @@
             var news = this.newsArticles.GetAllNew().To<NewsArticleIndexViewModel>().ToList();
             var categories = this.newsCategories.GetAll().To<NewsCategoryViewModel>().ToList();
             var regions = this.regions.GetAll().To<RegionViewModel>().ToList();
-            var topNews = this.newsArticles.GetAllNew().To<DetailsViewModel>().Take(4).ToList();
+            var topNews = this.newsArticles.GetAllNew().To<ArticleCarouselViewModel>().Take(4).ToList();
             var aside = new AsideViewModel();
 
             aside.MostVisitedArticles = this.newsArticles.GetAll()

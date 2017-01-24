@@ -14,6 +14,6 @@
 
         public AsideViewModel Aside { get; set; }
 
-        public IEnumerable<DetailsViewModel> TopNews { get; set; }
+        public IEnumerable<ArticleCarouselViewModel> TopNews { get; set; }
     }
 }
