@@ -51,6 +51,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -76,6 +77,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\MvcEssentials.Services.Logic\MvcEssentials.Services.Logic.csproj">
+      <Project>{51C1BF67-76E0-4796-A561-2E395C665665}</Project>
+      <Name>MvcEssentials.Services.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MvcEssentials.Data.Common\MvcEssentials.Data.Common.csproj">
       <Project>{d7302d8f-711c-4e6e-8105-8817e4cb4b35}</Project>
       <Name>MvcEssentials.Data.Common</Name>

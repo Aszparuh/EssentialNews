@@ -4,12 +4,15 @@
     using System.Configuration;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
+    using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Web.Hosting;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
 
     using MvcEssentials.Data.Models;
+    using Services.Logic;
 
     public sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -102,45 +105,88 @@
                 context.SaveChanges();
             }
 
-            // try
-            // {
-            //    if (!context.NewsArticles.Any())
-            //    {
-            //        string title = "Jackie Robinson: A 'great American,' a complicated man";
-            //        string content = " The story of Jackie Robinson isn't just the story of a pioneering baseball player. It's also, says Ken Burns, a story that says much about race and America -- as well as the complicated man at its center. Robinson is the subject of \"Jackie Robinson,\" a documentary from celebrated filmmaker Burns, his daughter Sarah Burns and her husband, David McMahon.It airs Monday and Tuesday on PBS. Robinson's life paralleled, and sometimes intersected with, events in the life of the country. He was born in the Jim Crow South, the son of sharecroppers and the grandson of a slave. He grew up in California, the state to which so many would migrate in the coming decades. He served in the military-- and fought its discrimination.He played in New York in the 1950s when it was \"the capital of baseball.\" He was a Republican who attended the 1964 GOP convention but then supported Democrats as the political parties' makeup changed. He struggled with the social tumult of the 1960s, a conflict poignantly reflected in his relationship with his son, a Vietnam War veteran who overcame a drug problem only to die in a car accident. He had a rich and devoted marriage to his wife, Rachel, his partner and sounding board. In other words, there's a much bigger picture than the one you'll find on a baseball card. added,\"In some ways, knowing the full, complex picture of Jackie gives you a greater perspective on what's going on today, from Trayvon Martin and Ferguson to the presidency and even the rollback of some of the essential liberties given to African-Americans in the mid-'60s that now seem to be in jeopardy.";
-            //        string sampleContent = " The story of Jackie Robinson isn't just the story of a pioneering baseball player. It's also, says Ken Burns, a story that says much about race and America";
-            //        for (int i = 0; i <= 50; i++)
-            //        {
-            //            var article = new NewsArticle()
-            //            {
-            //                Title = string.Format("{0} {1}", i, title),
-            //                Content = content,
-            //                SampleContent = sampleContent
-            //            };
+            try
+            {
+                if (!context.NewsArticles.Any())
+                {
+                    var path = HostingEnvironment.MapPath(@"~/App_Data/Resources/Images/");
+                    string adminUserName = ConfigurationManager.AppSettings["AdminUserName"];
+                    var articlesToBeSeeded = new NewsArticle[5];
+                    var sampleTitle = "Title";
+                    var sampleContent = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+                    var subTitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+                    var categoriesCount = context.Categories.Count();
+                    var adminId = context.Users.Where(x => x.UserName == adminUserName).First().Id;
+                    var imageProcessService = new ImageProcessService();
 
-            // context.NewsArticles.Add(article);
-            //        }
+                    for (int i = 0; i < articlesToBeSeeded.Length; i++)
+                    {
+                        articlesToBeSeeded[i] = new NewsArticle();
+                        articlesToBeSeeded[i].Title = sampleTitle + " " + i;
+                        articlesToBeSeeded[i].Content = sampleContent;
+                        articlesToBeSeeded[i].SampleContent = subTitle;
+                        articlesToBeSeeded[i].ApplicationUserId = adminId;
 
-            // context.SaveChanges();
-            //    }
-            // }
-            // catch (DbEntityValidationException ex)
-            // {
-            //    var sb = new StringBuilder();
-            //    foreach (var failure in ex.EntityValidationErrors)
-            //    {
-            //        sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
-            //        foreach (var error in failure.ValidationErrors)
-            //        {
-            //            sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
-            //            sb.AppendLine();
-            //        }
-            //    }
+                        var originalImageContent = File.ReadAllBytes(path + "image" + (i + 1) + ".jpg");
+                        var thumbnailImageContent = imageProcessService.Resize(originalImageContent, 260, 180);
+                        var qualityImageContent = imageProcessService.Resize(originalImageContent, 640, 360);
+                        var asideThumbnailImageContent = imageProcessService.Resize(originalImageContent, 141, 106);
 
-            // throw new DbEntityValidationException(
-            //        "Entity Validation Failed - errors follow:\n" +
-            //        sb.ToString(), ex);
-            // }
+                        articlesToBeSeeded[i].Images.Add(new Image()
+                        {
+                            FileName = "image" + i,
+                            ContentType = "jpg",
+                            Content = originalImageContent,
+                            Type = ImageType.Original
+                        });
+
+                        articlesToBeSeeded[i].Images.Add(new Image()
+                        {
+                            FileName = "image" + i,
+                            ContentType = "jpg",
+                            Content = thumbnailImageContent,
+                            Type = ImageType.Thumbnail
+                        });
+
+                        articlesToBeSeeded[i].Images.Add(new Image()
+                        {
+                            FileName = "image" + i,
+                            ContentType = "jpg",
+                            Content = qualityImageContent,
+                            Type = ImageType.Normal
+                        });
+
+                        articlesToBeSeeded[i].Images.Add(new Image()
+                        {
+                            FileName = "image" + i,
+                            ContentType = "jpg",
+                            Content = asideThumbnailImageContent,
+                            Type = ImageType.AsideThumbnail
+                        });
+
+                        context.NewsArticles.Add(articlesToBeSeeded[i]);
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+            catch (DbEntityValidationException ex)
+            {
+                var sb = new StringBuilder();
+                foreach (var failure in ex.EntityValidationErrors)
+                {
+                    sb.AppendFormat("{0} failed validation\n", failure.Entry.Entity.GetType());
+                    foreach (var error in failure.ValidationErrors)
+                    {
+                        sb.AppendFormat("- {0} : {1}", error.PropertyName, error.ErrorMessage);
+                        sb.AppendLine();
+                    }
+                }
+
+                throw new DbEntityValidationException(
+                       "Entity Validation Failed - errors follow:\n" +
+                       sb.ToString(), ex);
+            }
         }
     }
 }

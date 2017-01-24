@@ -232,6 +232,11 @@
     <Compile Include="ViewModels\Partials\NewsArticleAsideViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Resources\Images\image1.jpg" />
+    <Content Include="App_Data\Resources\Images\image2.jpg" />
+    <Content Include="App_Data\Resources\Images\image3.jpg" />
+    <Content Include="App_Data\Resources\Images\image4.jpg" />
+    <Content Include="App_Data\Resources\Images\image5.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -606,7 +611,6 @@
     <Content Include="Views\Shared\_CarouselPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\File\" />
   </ItemGroup>
   <ItemGroup>
