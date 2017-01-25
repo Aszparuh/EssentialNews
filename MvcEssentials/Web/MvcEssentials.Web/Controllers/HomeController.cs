@@ -24,29 +24,23 @@
 
         public ActionResult Index()
         {
-            var news = this.newsArticles.GetAllNew().To<NewsArticleIndexViewModel>().ToList();
-            var categories = this.newsCategories.GetAll().To<NewsCategoryViewModel>().ToList();
-            var regions = this.regions.GetAll().To<RegionViewModel>().ToList();
-            var topNews = this.newsArticles.GetAllNew().To<ArticleCarouselViewModel>().Take(4).ToList();
+            var allNews = this.newsArticles.GetAllNew();
+            var topNews = allNews.To<ArticleCarouselViewModel>().Take(4).ToList();
+            var news = allNews.To<NewsArticleIndexViewModel>().Skip(4).Take(4).ToList();
             var aside = new AsideViewModel();
 
-            aside.MostVisitedArticles = this.newsArticles.GetAll()
-                .OrderByDescending(a => a.Visits.Count)
+            aside.MostVisitedArticles = allNews.OrderByDescending(a => a.Visits.Count)
                 .Take(10)
                 .To<NewsArticleAsideViewModel>()
                 .ToList();
 
-            aside.RecentArticles = this.newsArticles.GetAll()
-                .OrderByDescending(a => a.CreatedOn)
-                .Take(10)
+            aside.RecentArticles = allNews.Take(10)
                 .To<NewsArticleAsideViewModel>()
                 .ToList();
 
             var viewModel = new IndexViewModel()
             {
                 Articles = news,
-                Categories = categories,
-                Regions = regions,
                 Aside = aside,
                 TopNews = topNews
             };
