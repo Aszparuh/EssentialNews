@@ -9,6 +9,8 @@
 
     public class HomeController : BaseController
     {
+        private const string ModelCacheKey = "ViewModel";
+
         private readonly INewsService newsArticles;
         private readonly INewsCategoryService newsCategories;
         private readonly IRegionsService regions;
@@ -22,7 +24,7 @@
 
         public ActionResult Index()
         {
-            if (this.HttpContext.Cache["ViewModel"] == null)
+            if (this.HttpContext.Cache[ModelCacheKey] == null)
             {
                 var allNews = this.newsArticles.GetAllNew().Take(10).ToList();
                 var topNews = allNews.Take(4).Select(x => this.Mapper.Map<ArticleCarouselViewModel>(x)).Take(4);
@@ -39,10 +41,10 @@
                     TopNews = topNews
                 };
 
-                this.HttpContext.Cache.Insert("ViewModel", viewModel, null, DateTime.Now.AddSeconds(30), TimeSpan.Zero);
+                this.HttpContext.Cache.Insert(ModelCacheKey, viewModel, null, DateTime.Now.AddSeconds(30), TimeSpan.Zero);
             }
 
-            var viewModelToDisplay = this.HttpContext.Cache["ViewModel"];
+            var viewModelToDisplay = this.HttpContext.Cache[ModelCacheKey];
 
             return this.View(viewModelToDisplay);
         }
