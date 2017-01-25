@@ -1,11 +1,11 @@
 ﻿namespace MvcEssentials.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Web.Mvc;
     using Services.Data;
     using ViewModels.Home;
     using ViewModels.Partials;
-    using System;
 
     public class HomeController : BaseController
     {
