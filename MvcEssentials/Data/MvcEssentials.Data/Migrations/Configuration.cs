@@ -75,9 +75,9 @@
             {
                 var categoriesList = new List<Models.NewsCategory>()
                 {
-                    new Models.NewsCategory() { Name = "Spors" },
-                    new Models.NewsCategory() { Name = "Crime" },
-                    new Models.NewsCategory() { Name = "Entertainment" }
+                    new NewsCategory() { Name = "Spors" },
+                    new NewsCategory() { Name = "Crime" },
+                    new NewsCategory() { Name = "Entertainment" }
                 };
 
                 foreach (var category in categoriesList)
@@ -112,7 +112,7 @@
                     var path = HostingEnvironment.MapPath(@"~/App_Data/Resources/Images/");
                     string adminUserName = ConfigurationManager.AppSettings["AdminUserName"];
                     var articlesToBeSeeded = new NewsArticle[5];
-                    var sampleTitle = "Title";
+                    var sampleTitle = "Article Title";
                     var sampleContent = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
                     var subTitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
                     var categoriesCount = context.Categories.Count();
@@ -122,7 +122,7 @@
                     for (int i = 0; i < articlesToBeSeeded.Length; i++)
                     {
                         articlesToBeSeeded[i] = new NewsArticle();
-                        articlesToBeSeeded[i].Title = sampleTitle + " " + i;
+                        articlesToBeSeeded[i].Title = sampleTitle;
                         articlesToBeSeeded[i].Content = sampleContent;
                         articlesToBeSeeded[i].SampleContent = subTitle;
                         articlesToBeSeeded[i].ApplicationUserId = adminId;
