@@ -1,7 +1,6 @@
 ﻿namespace MvcEssentials.Web.ViewModels.Home
 {
     using System.Collections.Generic;
-    using News;
     using Partials;
 
     public class IndexViewModel
