@@ -22,11 +22,8 @@
                         var createdImage = imageFactory
                                 .Load(originalImageStream);
 
-                        if (createdImage.Image.Width > width)
-                        {
-                            createdImage = createdImage
-                                .Resize(new ResizeLayer(new Size(width, height), ResizeMode.Crop));
-                        }
+                        createdImage = createdImage
+                            .Resize(new ResizeLayer(new Size(width, height), ResizeMode.Crop));
 
                         createdImage
                             .Format(new JpegFormat { Quality = Constants.ImageQuality })
