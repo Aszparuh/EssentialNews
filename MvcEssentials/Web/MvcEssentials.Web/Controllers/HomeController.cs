@@ -2,11 +2,10 @@
 {
     using System.Linq;
     using System.Web.Mvc;
-    using AutoMapper;
-    using Infrastructure.Mapping;
     using Services.Data;
     using ViewModels.Home;
     using ViewModels.Partials;
+    using System;
 
     public class HomeController : BaseController
     {
@@ -23,22 +22,29 @@
 
         public ActionResult Index()
         {
-            var allNews = this.newsArticles.GetAllNew().Take(10).ToList();
-            var topNews = allNews.Take(4).Select(x => this.Mapper.Map<ArticleCarouselViewModel>(x)).Take(4);
-            var news = allNews.Skip(4).Take(6).Select(x => this.Mapper.Map<NewsArticleIndexViewModel>(x));
-            var aside = new AsideViewModel();
-
-            aside.MostVisitedArticles = allNews.Take(10).Select(x => this.Mapper.Map<NewsArticleAsideViewModel>(x));
-            aside.RecentArticles = allNews.Take(10).Select(x => this.Mapper.Map<NewsArticleAsideViewModel>(x));
-
-            var viewModel = new IndexViewModel()
+            if (this.HttpContext.Cache["ViewModel"] == null)
             {
-                Articles = news,
-                Aside = aside,
-                TopNews = topNews
-            };
+                var allNews = this.newsArticles.GetAllNew().Take(10).ToList();
+                var topNews = allNews.Take(4).Select(x => this.Mapper.Map<ArticleCarouselViewModel>(x)).Take(4);
+                var news = allNews.Skip(4).Take(6).Select(x => this.Mapper.Map<NewsArticleIndexViewModel>(x));
+                var aside = new AsideViewModel();
 
-            return this.View(viewModel);
+                aside.MostVisitedArticles = allNews.Take(10).Select(x => this.Mapper.Map<NewsArticleAsideViewModel>(x));
+                aside.RecentArticles = allNews.Take(10).Select(x => this.Mapper.Map<NewsArticleAsideViewModel>(x));
+
+                var viewModel = new IndexViewModel()
+                {
+                    Articles = news,
+                    Aside = aside,
+                    TopNews = topNews
+                };
+
+                this.HttpContext.Cache.Insert("ViewModel", viewModel, null, DateTime.Now.AddSeconds(30), TimeSpan.Zero);
+            }
+
+            var viewModelToDisplay = this.HttpContext.Cache["ViewModel"];
+
+            return this.View(viewModelToDisplay);
         }
 
         public ActionResult About()
