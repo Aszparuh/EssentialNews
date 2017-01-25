@@ -1,13 +1,11 @@
 ﻿namespace MvcEssentials.Web.Controllers
 {
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
     using Microsoft.AspNet.Identity;
     using MvcEssentials.Data.Models;
     using Services.Data;
     using Services.Logic;
-    using ViewModels.Home;
     using ViewModels.News;
 
     public class NewsController : BaseController
