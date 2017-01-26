@@ -113,8 +113,16 @@
                     string adminUserName = ConfigurationManager.AppSettings["AdminUserName"];
                     var articlesToBeSeeded = new NewsArticle[10];
                     var sampleTitle = "Article Title";
-                    var sampleContent = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-                    var subTitle = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.";
+                    var sampleContent = "Lorem ipsum dolor sit amet, quis elit quis nunc," +
+                        " vulputate at sit lectus aliquam, libero vel. Egestas auctor ac" +
+                        " mattis morbi nibh ipsum, habitasse luctus aliquam mauris turpis" +
+                        " elit. Quisque et placerat. Rutrum augue elementum vitae elementum," +
+                        " litora nunc, nunc urna mauris vestibulum metus lorem eu, ornare nunc" +
+                        " tellus eget curabitur, felis vitae. Morbi ornare viverra. Commodo" +
+                        " laoreet ligula maecenas a malesuada proin, ullamcorper neque wisi" +
+                        " ut placerat, pellentesque nulla fermentum lectus massa ipsum amet.";
+
+                    var subTitle = "Lorem ipsum dolor sit amet, quis elit quis nunc";
                     var categoriesCount = context.Categories.Count();
                     var adminId = context.Users.Where(x => x.UserName == adminUserName).First().Id;
                     var imageProcessService = new ImageProcessService();
