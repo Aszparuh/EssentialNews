@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Infrastructure.Mapping;
     using Services.Data;
     using ViewModels.Home;
 
@@ -19,9 +20,9 @@
         {
             if (this.HttpContext.Cache[ModelCacheKey] == null)
             {
-                var allNews = this.NewsArticles.GetAllNew().Take(10).ToList();
-                var topNews = allNews.Take(4).Select(x => this.Mapper.Map<ArticleCarouselViewModel>(x)).Take(4);
-                var news = allNews.Skip(4).Take(6).Select(x => this.Mapper.Map<NewsArticleIndexViewModel>(x));
+                var allNews = this.NewsArticles.GetAllNew().Take(10);
+                var topNews = allNews.To<ArticleCarouselViewModel>().Take(4).ToList();
+                var news = allNews.To<NewsArticleIndexViewModel>().Skip(4).ToList();
 
                 var viewModel = new IndexViewModel()
                 {
