@@ -7,8 +7,6 @@
     {
         public IEnumerable<NewsArticleIndexViewModel> Articles { get; set; }
 
-        public AsideViewModel Aside { get; set; }
-
         public IEnumerable<ArticleCarouselViewModel> TopNews { get; set; }
     }
 }

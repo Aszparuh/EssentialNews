@@ -5,39 +5,27 @@
     using System.Web.Mvc;
     using Services.Data;
     using ViewModels.Home;
-    using ViewModels.Partials;
 
     public class HomeController : BaseController
     {
         private const string ModelCacheKey = "ViewModel";
 
-        private readonly INewsService newsArticles;
-        private readonly INewsCategoryService newsCategories;
-        private readonly IRegionsService regions;
-
-        public HomeController(INewsService newsArticles, INewsCategoryService newsCategories, IRegionsService regions)
+        public HomeController(INewsService newsArticles)
+            : base(newsArticles)
         {
-            this.newsArticles = newsArticles;
-            this.newsCategories = newsCategories;
-            this.regions = regions;
         }
 
         public ActionResult Index()
         {
             if (this.HttpContext.Cache[ModelCacheKey] == null)
             {
-                var allNews = this.newsArticles.GetAllNew().Take(10).ToList();
+                var allNews = this.NewsArticles.GetAllNew().Take(10).ToList();
                 var topNews = allNews.Take(4).Select(x => this.Mapper.Map<ArticleCarouselViewModel>(x)).Take(4);
                 var news = allNews.Skip(4).Take(6).Select(x => this.Mapper.Map<NewsArticleIndexViewModel>(x));
-                var aside = new AsideViewModel();
-
-                aside.MostVisitedArticles = allNews.Take(10).Select(x => this.Mapper.Map<NewsArticleAsideViewModel>(x));
-                aside.RecentArticles = allNews.Take(10).Select(x => this.Mapper.Map<NewsArticleAsideViewModel>(x));
 
                 var viewModel = new IndexViewModel()
                 {
                     Articles = news,
-                    Aside = aside,
                     TopNews = topNews
                 };
 

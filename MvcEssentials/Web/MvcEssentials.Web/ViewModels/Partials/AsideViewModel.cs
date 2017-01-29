@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using Home;
-
     public class AsideViewModel
     {
         public IEnumerable<NewsArticleAsideViewModel> RecentArticles { get; set; }

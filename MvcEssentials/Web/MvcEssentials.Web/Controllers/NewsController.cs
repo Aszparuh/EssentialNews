@@ -16,6 +16,7 @@
         private readonly IImageProcessService imageProcessService;
 
         public NewsController(INewsService newsArticles, INewsCategoryService newsCategories, IRegionsService newsRegions, IImageProcessService imageProcessService)
+            : base(newsArticles)
         {
             this.newsArticles = newsArticles;
             this.newsCategories = newsCategories;
