@@ -27,19 +27,22 @@
                     </a>
 
                     <p class="hidden-xs">@Html.Raw(article.SampleContent)</p>
-                    <div class="pull-right">
-                        <span class="glyphicon glyphicon-time"></span>
-                        <span>@article.CreatedOn.</span>
-                    </div>
-                    <div>
-                        @if (article.UserName != null)
-                        {
-                            <span class="glyphicon glyphicon-user"></span>
+                    <div class="article-info">
+                        <div class="pull-right">
+                            <span class="glyphicon glyphicon-time"></span>
+                            <time>@article.CreatedOn.</time>
+                        </div>
+                        <div>
+                            @if (article.UserName != null)
+                            {
+                                <span class="glyphicon glyphicon-user"></span>
                                 <span>@article.UserName</span>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
+            <hr />
         }
     </div>
     <div class="col-md-4">

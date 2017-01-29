@@ -33,3 +33,7 @@ textarea {
 .navbar-fixed-top  {
      -webkit-backface-visibility: hidden;
 }
+
+.article-info {
+    padding-top: 90px
+}
