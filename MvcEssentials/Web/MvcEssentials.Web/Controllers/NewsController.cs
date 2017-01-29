@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using System.Web.Mvc;
+    using Infrastructure.Mapping;
     using Microsoft.AspNet.Identity;
     using MvcEssentials.Data.Models;
     using Services.Data;
@@ -27,12 +28,11 @@
         // GET: News
         public ActionResult Details(int id, string name)
         {
-            var article = this.newsArticles.GetById(id);
+            var article = this.newsArticles.GetAll().Where(x => x.Id == id).To<DetailsViewModel>().First();
 
             if (article != null && article.Title == name)
             {
-                var viewModel = this.Mapper.Map<DetailsViewModel>(article);
-                return this.View(viewModel);
+                return this.View(article);
             }
             else
             {
