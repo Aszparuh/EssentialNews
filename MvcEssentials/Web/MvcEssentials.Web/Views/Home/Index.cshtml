@@ -9,11 +9,13 @@
         <hr />
         @foreach (var article in Model.Articles)
         {
-            <div class="row well-sm">
+            <div class="row well-sm hovereffect">
                 @if (article.ThumbnailId != null)
                 {
                     <a href="/Details/@article.Id?name=@article.Title" class="media-left">
-                        <img src="~/File?id=@article.ThumbnailId" height="180" , width="260" />
+                        <div class="hovereffect">
+                            <img src="~/File?id=@article.ThumbnailId" height="180" , width="260" />
+                        </div>                     
                     </a>
                 }
 
