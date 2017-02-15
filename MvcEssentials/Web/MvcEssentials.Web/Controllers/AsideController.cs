@@ -15,6 +15,7 @@
         }
 
         [ChildActionOnly]
+        [OutputCache(Duration = 60)]
         public ActionResult Index()
         {
             var allNews = this.NewsArticles.GetAllNew().Take(10).To<NewsArticleAsideViewModel>().ToList();
