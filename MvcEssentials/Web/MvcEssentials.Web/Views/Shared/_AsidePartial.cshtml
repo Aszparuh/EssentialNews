@@ -14,9 +14,11 @@
             <div class="panel-body">
                 @foreach (var article in Model.MostVisitedArticles)
                 {
-                    <div class="row well-sm">
+                    <div class="row well-sm hovereffect">
                         <a href="/Details/@article.Id?name=@article.Title" class="media-left">
-                            <img src="~/File?id=@article.SmallThumbnailId" height="106" , width="141" />
+                            <div class="hovereffect">
+                                <img src="~/File?id=@article.SmallThumbnailId" height="106" , width="141" />
+                             </div>
                         </a>
                         <div class="media-body">
                             <h5>
@@ -31,9 +33,11 @@
             <div class="panel-body">
                 @foreach (var article in Model.RecentArticles)
                 {
-                    <div class="row well-sm">
+                    <div class="row well-sm hovereffect">
                         <a href="/Details/@article.Id?name=@article.Title" class="media-left">
-                            <img src="~/File?id=@article.SmallThumbnailId" height="106" , width="141" />
+                            <div class="hovereffect">
+                                <img src="~/File?id=@article.SmallThumbnailId" height="106" , width="141" />
+                            </div>
                         </a>
                         <div class="media-body">
                             <h5>

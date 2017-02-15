@@ -57,7 +57,7 @@ textarea {
 }
 
 .hovereffect:hover img {
-  -webkit-transform:scale(1.2); /* Safari and Chrome */
+    -webkit-transform:scale(1.2); /* Safari and Chrome */
     -moz-transform:scale(1.2); /* Firefox */
     -ms-transform:scale(1.2); /* IE 9 */
     -o-transform:scale(1.2); /* Opera */

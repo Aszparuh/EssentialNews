@@ -9,7 +9,7 @@
         <hr />
         @foreach (var article in Model.Articles)
         {
-            <div class="row well-sm">
+            <div class="row well-sm hovereffect">
                 @if (article.ThumbnailId != null)
                 {
                     <a href="/Details/@article.Id?name=@article.Title" class="media-left">
