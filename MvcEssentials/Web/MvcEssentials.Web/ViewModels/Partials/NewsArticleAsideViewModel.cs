@@ -16,7 +16,7 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public void CreateMappings(IMapperConfiguration configuration)
+        public void CreateMappings(IMapperConfigurationExpression configuration)
         {
             configuration.CreateMap<NewsArticle, NewsArticleAsideViewModel>()
                 .ForMember(x => x.SmallThumbnailId, opt => opt.MapFrom(

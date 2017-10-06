@@ -13,7 +13,7 @@
 
         public int? ImageId { get; set; }
 
-        public void CreateMappings(IMapperConfiguration configuration)
+        public void CreateMappings(IMapperConfigurationExpression configuration)
         {
             configuration.CreateMap<NewsArticle, ArticleCarouselViewModel>()
                 .ForMember(x => x.ImageId, opt => opt.MapFrom(x => x.Images.Where(img => img.Type == ImageType.Normal).FirstOrDefault().Id));
